@@ -31,6 +31,6 @@ fi
 git commit -m "$commit_message"
 
 # Пуш с аутентификацией
-git push https://$GIT_USERNAME:$GIT_PASSWORD@github.com/Andreyhiitola/telegram-hotel-faq-bot.git main
+git push https://$GIT_USERNAME:$GIT_PASSWORD@https://github.com/Andreyhiitola/pelikan-bot-aiogram.git
 
 echo "✅ Изменения отправлены."
