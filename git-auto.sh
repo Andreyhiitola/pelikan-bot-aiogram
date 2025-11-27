@@ -1,36 +1,37 @@
 #!/bin/bash
 
-# Загружаем переменные из .env
-if [ -f .env ]; then
-  export $(cat .env | xargs)
-else
-  echo "Ошибка: файл .env не найден"
-  exit 1
-fi
-
 REPO_PATH=/home/andy/pelikan-bot-aiogram
 
+cd "$REPO_PATH" || { echo "❌ Путь не найден: $REPO_PATH"; exit 1; }
 
-cd "$REPO_PATH" || exit 1
+echo "📂 Работаем в: $(pwd)"
 
 # Обновить локальную ветку
+echo "🔄 git pull origin main..."
 git pull origin main
+
+# Проверяем изменения
+if git diff --quiet && git diff --staged --quiet; then
+  echo "ℹ️ Нет изменений для коммита"
+  exit 0
+fi
 
 # Добавить изменения
 git add .
 
-# Запрашиваем комментарий
-read -p "Введите сообщение для коммита: " commit_message
-
-if [ -z "$commit_message" ]; then
-  echo "Сообщение коммита не может быть пустым."
-  exit 1
-fi
+# Запрашиваем комментарий (с дефолтом)
+read -p "💬 Сообщение коммита (Enter=Update from server): " commit_message
+commit_message=${commit_message:-"Update from server"}
 
 # Коммит
+echo "✅ Коммит: $commit_message"
 git commit -m "$commit_message"
 
-# Пуш с аутентификацией
-git push https://$GIT_USERNAME:$GIT_PASSWORD@https://github.com/Andreyhiitola/pelikan-bot-aiogram.git
+# ✅ ПУШ ЧЕРЕЗ SSH (без .env и паролей!)
+echo "🚀 git push origin main..."
+git push origin main
 
-echo "✅ Изменения отправлены."
+echo "🎉 ✅ Изменения отправлены!"
+echo "📊 Статус:"
+git status
+
