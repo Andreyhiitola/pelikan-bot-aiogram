@@ -1,3 +1,4 @@
+https://www.perplexity.ai/search/po-segodneshnei-rabote-sdelai-rS3EDvvISX.WBwUAsbiEYQ
 Сделайте в репозитории файл project.md и вставьте туда разделы:
 
 Назначение бота (для базы «Пеликан Алаколь»).
